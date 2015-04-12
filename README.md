@@ -25,12 +25,12 @@ Fucking simple presentations.
 9-pattern_matching.md
 ```
 
-- Use the `.jar` to present like so:
+- Use the `.jar` to start the presentation server:
 
 ```sh
-java -DslidesPath=$PATH_TO_SLIDES \
-     -DpresentationName=$TITLE_OF_PRESENTATION \
-     -jar $PATH_TO_JAR
+$ java -DslidesPath=$PATH_TO_SLIDES \
+       -DpresentationName=$TITLE_OF_PRESENTATION \
+       -jar $PATH_TO_JAR
 ```
 
 - Give the people what they want:
