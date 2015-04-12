@@ -41,6 +41,7 @@ $ open http://localhost:9000
 - If you haven't built the jar, build it like this:
 
 ```sh
+$ brew update && brew install typesafe-activator
 $ git clone $THE_REPO
 $ cd empress
 $ activator
