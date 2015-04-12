@@ -6,14 +6,14 @@ Fucking simple presentations.
 ## Why?
 
 - You want to write your slides in Markdown, because like plain text, Markdown is classy, portable, and patriotic as fuck
-- You don't want to mess around with smelly Keynote, Powerpoint, Prezi or Reveal.js.
+- You don't want to mess around with Keynote, Powerpoint, Prezi or Reveal.js like a peasant
 
 ## How?
 
 - Write slides in Markdown files.
-- Name the files like this to indicate presentation order:
+- Put the slides in a directory and name them like this to indicate presentation order:
 
-```
+```sh
 1-getting_started.md
 2-practical.md
 3-exploratory.md
@@ -27,15 +27,20 @@ Fucking simple presentations.
 
 - Use the `.jar` to present like so:
 
-```
-java -DslidesPath="/Users/clark/code/scala_talks/slides" \
-     -DpresentationName="Scala And You" \
+```sh
+java -DslidesPath=$PATH_TO_SLIDES \
+     -DpresentationName=$TITLE_OF_PRESENTATION \
      -jar $PATH_TO_JAR
+```
+
+- Give the people what they want:
+```sh
+$ open http://localhost:9000
 ```
 
 - If you haven't built the jar, build it like this:
 
-```
+```sh
 $ git clone $THE_REPO
 $ cd empress
 $ activator
