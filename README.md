@@ -38,7 +38,7 @@ $ java -DslidesPath=$PATH_TO_SLIDES \
 $ open http://localhost:9000
 ```
 
-- If you haven't built the jar, build it like this:
+- If you haven't built the `.jar`, build it like this:
 
 ```sh
 $ git clone $THE_REPO
