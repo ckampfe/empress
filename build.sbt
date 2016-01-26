@@ -4,12 +4,12 @@ version := "0.0.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
   cache,
   ws,
-  "org.pegdown" % "pegdown" % "1.5.0"
+  "org.pegdown" % "pegdown" % "1.6.0"
 )
 
 mainClass in assembly := Some("play.core.server.NettyServer")
