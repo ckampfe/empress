@@ -1,18 +1,18 @@
 name := """empress"""
 
-version := "0.0.1"
+version := "0.0.2"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
   cache,
-  ws,
+  // ws,
   "org.pegdown" % "pegdown" % "1.6.0"
 )
 
-mainClass in assembly := Some("play.core.server.NettyServer")
+mainClass in assembly := Some("play.core.server.ProdServerStart")
 
 fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value)
 
@@ -26,5 +26,6 @@ libraryDependencies ~= { _ map {
 // Take the first ServerWithStop because it's packaged into two jars
 assemblyMergeStrategy in assembly := {
   case PathList("play", "core", "server", "ServerWithStop.class") => MergeStrategy.first
+  case PathList("META-INF", "io.netty.versions.properties") => MergeStrategy.first
   case other => (assemblyMergeStrategy in assembly).value(other)
 }

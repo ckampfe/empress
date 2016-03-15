@@ -8,7 +8,7 @@ import play.api.mvc._
 /**
  * Created by clark on 4/11/15.
  */
-object Slide extends Controller {
+class Slide extends Controller {
 
   val mdSlides = (new File(System.getProperty("slidesPath"))).listFiles().toList.map(_.getCanonicalPath)
 
