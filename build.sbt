@@ -1,6 +1,6 @@
 name := """empress"""
 
-version := "0.0.2"
+version := "0.0.3"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -9,7 +9,8 @@ scalaVersion := "2.11.8"
 libraryDependencies ++= Seq(
   cache,
   // ws,
-  "org.pegdown" % "pegdown" % "1.6.0"
+  "org.pegdown" % "pegdown" % "1.6.0",
+  "com.lihaoyi" %% "ammonite-ops" % "0.5.6"
 )
 
 mainClass in assembly := Some("play.core.server.ProdServerStart")

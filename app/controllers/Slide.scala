@@ -1,7 +1,6 @@
 package controllers
 
-import java.io.File
-
+import ammonite.ops._
 import play.api.mvc._
 
 
@@ -10,9 +9,15 @@ import play.api.mvc._
  */
 class Slide extends Controller {
 
-  val mdSlides = (new File(System.getProperty("slidesPath"))).listFiles().toList.map(_.getCanonicalPath)
+  val mdSlides =
+    (System.getProperty("slidesPath"))
+      .|> (Path.apply)
+      .|> (ls)
+      .|? (_.isFile)
+      .|? (_.ext == "md")
+      .|> (_.sortBy(_.toString))
 
-  mdSlides foreach println
+  mdSlides.map(_.toString).foreach(println)
 
   val slides = models.Slide.makeSlides(mdSlides)
 
@@ -20,11 +25,11 @@ class Slide extends Controller {
     Ok(mdSlides.mkString("\n"))
   }
 
-  def show(slideNumber: Long = 1) = Action {
-    val previous = if (slideNumber - 1 < 1) None else Some(slideNumber - 1)
-    val next = if (slideNumber + 1 > slides.toList.length) None else Some(slideNumber + 1)
+  def show(slideNumber: Int = 0) = Action {
+    val previous = if (slideNumber - 1 < 0) None else Some(slideNumber - 1)
+    val next = if (slideNumber + 1 > slides.toList.length - 1) None else Some(slideNumber + 1)
 
-    slides.get(slideNumber) match {
+    slides.lift(slideNumber) match {
       case Some(slide) => Ok(views.html.slide(slide.html, previous, next))
       case None => NotFound(s"Slide $slideNumber not found")
     }
