@@ -10,7 +10,7 @@ libraryDependencies ++= Seq(
   cache,
   // ws,
   "org.pegdown" % "pegdown" % "1.6.0",
-  "com.lihaoyi" %% "ammonite-ops" % "0.5.6"
+  "com.lihaoyi" %% "ammonite-ops" % "0.5.7"
 )
 
 mainClass in assembly := Some("play.core.server.ProdServerStart")
