@@ -2,6 +2,7 @@ package controllers
 
 import ammonite.ops._
 import play.api.mvc._
+import play.twirl.api.Html
 
 
 /**
@@ -30,8 +31,13 @@ class Slide extends Controller {
     val next = if (slideNumber + 1 > slides.toList.length - 1) None else Some(slideNumber + 1)
 
     slides.lift(slideNumber) match {
-      case Some(slide) => Ok(views.html.slide(slide.html, previous, next))
-      case None => NotFound(s"Slide $slideNumber not found")
+      case Some(slide) =>
+        Ok(
+          Html(
+            empress.views.Slide.template(slide.html, previous, next).toString
+          )
+        )
+       case None => NotFound(s"Slide $slideNumber not found")
     }
   }
 }
