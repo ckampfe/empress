@@ -1,9 +1,9 @@
-package empress.views
+package empress
 
 import scalatags.Text.all._
 import scalatags.Text.tags2.nav
 
-object Slide {
+object SlideView {
   def template(slide: String, prev: Option[Int], next: Option[Int]) =
     "<!DOCTYPE html>" + html(
       head(
@@ -46,7 +46,7 @@ object Slide {
               cls := "navbar-collapse collapse"
             )(
               ul(cls := "nav navbar-nav navbar-right")(
-                Slide.slide(prev, next)
+                SlideView.slide(prev, next)
               )
             )
           )
@@ -63,24 +63,24 @@ object Slide {
       case (Some(p), Some(n)) => {
         Seq(
           li(
-            a(href := controllers.routes.Slide.show(p).toString)("Previous")
+            a(href := s"/slides/$p")("Previous")
           ),
           li(
-            a(href := controllers.routes.Slide.show(n).toString)("Next")
+            a(href := s"/slides/$n")("Next")
           )
         )
       }
       case (Some(p), None) => {
         Seq(
           li(
-            a(href := controllers.routes.Slide.show(p).toString)("Previous")
+            a(href := s"/slides/$p")("Previous")
           )
         )
       }
       case (None, Some(n)) => {
         Seq(
           li(
-            a(href := controllers.routes.Slide.show(n).toString)("Next")
+            a(href := s"/slides/$n")("Next")
           )
         )
       }

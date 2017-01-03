@@ -1,13 +1,10 @@
-package models
+package empress
 
 import org.pegdown.{Extensions, PegDownProcessor}
 import ammonite.ops.Path
 
 import scala.io.Source
 
-/**
- * Created by clark on 4/11/15.
- */
 class Slide(val html: String)
 
 object Slide {

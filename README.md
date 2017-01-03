@@ -43,10 +43,9 @@ $ open http://localhost:9000
 ```sh
 $ git clone $THE_REPO
 $ cd empress
-$ ./activator
-[empress] $ assembly
+$ sbt assembly
 ```
 
-The `.jar` file will be in `target/scala-2.11`
+The `.jar` file will be in `target/scala-2.12`
 
 - If you don't have a JRE, I feel sorry for you.
