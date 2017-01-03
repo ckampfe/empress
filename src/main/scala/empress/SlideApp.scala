@@ -6,8 +6,11 @@ import org.http4s._
 import org.http4s.dsl._
 import org.http4s.headers.`Content-Type`
 import org.http4s.MediaType._
+import org.http4s.server.{Server, ServerApp}
+import org.http4s.server.blaze._
 
-object SlideApp {
+
+object SlideApp extends ServerApp{
   val mdSlides =
     (System.getProperty("slidesPath"))
       .|> (ammonite.ops.Path.apply)
@@ -46,4 +49,11 @@ object SlideApp {
            NotFound(s"Slide $slideNumber not found")
       }
    }
+
+  override def server(args: List[String]) = {
+    BlazeBuilder
+      .bindHttp(9000, "localhost")
+      .mountService(SlideApp.slideService, "/")
+      .start
+  }
 }
