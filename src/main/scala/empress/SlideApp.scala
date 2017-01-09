@@ -10,7 +10,7 @@ import org.http4s.server.{Server, ServerApp}
 import org.http4s.server.blaze._
 
 
-object SlideApp extends ServerApp{
+object SlideApp extends ServerApp {
   val mdSlides =
     (System.getProperty("slidesPath"))
       .|> (ammonite.ops.Path.apply)
