@@ -2,18 +2,20 @@ package empress
 
 // prevent ammonite from import the `/` function
 import ammonite.ops.{$div => _, _}
+import cats.effect._
+import fs2.{Stream, StreamApp}
+import fs2.StreamApp.ExitCode
 import org.http4s._
-import org.http4s.dsl._
+import org.http4s.dsl.io._
 import org.http4s.headers.`Content-Type`
 import org.http4s.MediaType._
-import org.http4s.server.{Server, ServerApp}
 import org.http4s.server.blaze._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
-object SlideApp extends ServerApp {
+object SlideApp extends StreamApp[IO] {
   val mdSlides =
-    (System.getProperty("slidesPath"))
-      .|> (ammonite.ops.Path.apply)
+    ammonite.ops.Path(System.getProperty("slidesPath"))
       .|> (ls)
       .|? (_.isFile)
       .|? (_.ext == "md")
@@ -23,7 +25,7 @@ object SlideApp extends ServerApp {
 
   val slides = Slide.makeSlides(mdSlides)
 
-  val slideService = HttpService {
+  val slideService = HttpService[IO] {
     case GET -> Root / "slides" =>
       Ok(mdSlides.mkString("\n"))
 
@@ -43,17 +45,18 @@ object SlideApp extends ServerApp {
       slides.lift(slideNumber) match {
         case Some(slide) =>
           Ok(
-            SlideView.template(slide.html, previous, next).toString
-          ).withContentType(Some(`Content-Type`(`text/html`)))
+            SlideView.template(slide.html, previous, next).toString,
+            `Content-Type`(`text/html`)
+          )
          case None =>
            NotFound(s"Slide $slideNumber not found")
       }
    }
 
-  override def server(args: List[String]) = {
-    BlazeBuilder
+  override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] = {
+    BlazeBuilder[IO]
       .bindHttp(9000, "localhost")
       .mountService(SlideApp.slideService, "/")
-      .start
+      .serve
   }
 }
