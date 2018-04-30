@@ -4,10 +4,15 @@ import scalatags.Text.all._
 import scalatags.Text.tags2.nav
 
 object SlideView {
-  def template(slide: String, prev: Option[Int], next: Option[Int]) =
+  def template(
+    slide: String,
+    prev: Option[Int],
+    next: Option[Int],
+    presentationName: String
+  ) =
     "<!DOCTYPE html>" + html(
       head(
-        scalatags.Text.tags2.title()(System.getProperty("presentationName")),
+        scalatags.Text.tags2.title()(presentationName),
         link(rel := "stylesheet", href := "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"),
         link(rel := "stylesheet", href := "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"),
         link(rel := "stylesheet", href := "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css"),
@@ -38,7 +43,7 @@ object SlideView {
                 cls := "navbar-brand",
                 href := "#"
               )(
-                System.getProperty("presentationName")
+                presentationName
               )
             ),
             div(

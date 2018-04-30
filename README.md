@@ -49,3 +49,19 @@ $ sbt assembly
 The `.jar` file will be in `target/scala-2.12`
 
 - If you don't have a JRE, I feel sorry for you.
+
+## Native binary
+
+Another option, if you have GraalVM, is you can build a native image.
+Do this:
+
+```
+native-image -H:+ReportUnsupportedElementsAtRuntime \
+-jar target/scala-2.12/empress-assembly-0.2.0.jar
+```
+
+Then:
+
+```
+./empress-assembly-0.2.0 /Users/xcxk066/code/testdeck "a great talk"
+```
